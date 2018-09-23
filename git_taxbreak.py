@@ -1,11 +1,10 @@
-'''
+""" Tool for collect artifacts for taxbreak program
 @author Kamil Luczak
-Tool for collect artifacts for taxbreak program
-'''
+"""
+import argparse
 import os
 from os.path import expanduser, expandvars
 import sys
-import argparse
 from datetime import datetime
 from unicodedata import normalize
 from zipfile import ZipFile
@@ -17,6 +16,7 @@ def read_user(repo):
         if 'user' in reader.sections():
             return next(
                 (v for k, v in reader.items('user') if k == 'name'), None)
+    return None
 
 
 def valid_date(s):
@@ -94,7 +94,7 @@ def main():
     parser.add_argument(
         '-a',
         '--after',
-        type=valid_date,
+        te=valid_date,
         default=today.strftime('%m/1/%y'))
     parser.add_argument(
         '-b',
