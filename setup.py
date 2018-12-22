@@ -1,15 +1,11 @@
-#!/usr/bin/env python
-from setuptools import setup
+import setuptools
 
-setup(
+INSTALL_REQUIRES = ["gitpython"]
+
+setuptools.setup(
     name="git-taxbreak",
-    description="git taxbreak tool",
-    author="Kamil Luczak",
-    author_email="kamil.luczak@luczakweb.pl",
-    keywords="git taxbreak",
-    url="https://github.com/kluczak/git-taxbreak",
-    version="0.1",
-    py_modules=["git_taxbreak"],
-    install_requires=["gitpython"],
-    entry_points={"console_scripts": ["git-taxbreak = git_taxbreak:main"]},
+    use_scm_version=True,
+    install_requires=INSTALL_REQUIRES,
+    setup_requires=["setuptools-scm", "setuptools>=40.0"],
+    package_dir={"": "src"},
 )
