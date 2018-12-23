@@ -5,6 +5,8 @@ python:
   - '3.6'
 cache: pip
 install:
-  - pip install tox
+  - pip install tox codecov
 script:
   - tox
+after_script:
+  - codecov
