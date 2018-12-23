@@ -11,9 +11,8 @@ Git taxbreak
    :target: https://codeclimate.com/github/kamil1b/git-taxbreak/maintainability
    :alt: Maintainability
 
-.. image:: https://api.codeclimate.com/v1/badges/6ad9e9549fdf496138c6/test_coverage
-   :target: https://codeclimate.com/github/kamil1b/git-taxbreak/test_coverage
-   :alt: Test Coverage
+.. image:: https://codecov.io/gh/kamil1b/git-taxbreak/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/kamil1b/git-taxbreak
 
 Tool for collect artifacts from git for register creative work 
 
