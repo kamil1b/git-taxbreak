@@ -61,21 +61,20 @@ def get_files(repo, commits):
                 for file_name in repo.git.diff_tree(
                     "--no-commit-id", "--name-only", "-r", commit
                 ).split("\n")
+                if file_name
             ],
         }
         for commit in commits
     ]
 
 
-def write_archive(destn, commits_files):
+def write_archive(destn, commits):
     with ZipFile(destn, "w") as archive:
-        for commit_files in commits_files:
-            for commit_file in commit_files["files"]:
-                if not commit_file["file_name"]:
-                    continue
+        for commit in commits:
+            for file in commit["files"]:
                 archive.writestr(
-                    os.path.join(commit_files["commit_hash"], commit_file["file_name"]),
-                    commit_file["content"],
+                    os.path.join(commit["commit_hash"], file["file_name"]),
+                    file["content"],
                 )
 
 
