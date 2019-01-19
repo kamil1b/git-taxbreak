@@ -1,14 +1,11 @@
 """ Tool for collect artifacts for taxbreak program
 @author Kamil Luczak
 """
-import argparse
 import os
-from os.path import expanduser, expandvars
-import sys
-from datetime import datetime
 from unicodedata import normalize
 from zipfile import ZipFile
 from git import Repo
+from .modules.argument_parser import ArgumentParser
 
 
 def read_user(repo):
@@ -16,19 +13,6 @@ def read_user(repo):
         if "user" in reader.sections():
             return next((v for k, v in reader.items("user") if k == "name"), None)
     return None
-
-
-def valid_date(s):
-    try:
-        datetime.strptime(s, "%m/%d/%y")
-        return s
-    except ValueError:
-        raise argparse.ArgumentTypeError("Invalid date format: {}".format(s))
-
-
-def valid_output(filename):
-    filename = expanduser(expandvars(filename))
-    return argparse.FileType("w+")(filename)
 
 
 def get_commits(repo, user, after, before):
@@ -61,7 +45,7 @@ def get_files(repo, commits):
                 for file_name in repo.git.diff_tree(
                     "--no-commit-id", "--name-only", "-r", commit
                 ).split("\n")
-                if file_name
+                if len(file_name)
             ],
         }
         for commit in commits
@@ -79,26 +63,11 @@ def write_archive(destn, commits):
 
 
 def main():
-    today = datetime.today()
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-u", "--user", action="store")
-    parser.add_argument("-U", "--unified", type=int, action="store", default=0)
-    parser.add_argument(
-        "-a", "--after", te=valid_date, default=today.strftime("%m/1/%y")
-    )
-    parser.add_argument(
-        "-b", "--before", type=valid_date, default=today.strftime("%m/%d/%y")
-    )
-    parser.add_argument("-o", "--output", type=valid_output, default=sys.stdout)
-    parser.add_argument(
-        "-t", "--type", type=str, choices=["diff", "file"], default="file"
-    )
-
-    args = parser.parse_args()
+    parser = ArgumentParser()
     repo = Repo(os.getcwd(), search_parent_directories=True)
-    user = args.user or read_user(repo)
-    commits = get_commits(repo, user, args.after, args.before)
-    if args.type == "file":
-        write_archive(args.output, get_files(repo, commits))
+    user = parser.user or read_user(repo)
+    commits = get_commits(repo, user, parser.after_date, parser.before_date)
+    if parser.type == "file":
+        write_archive(parser.output, get_files(repo, commits))
     else:
-        args.output.write(get_diffs(repo, commits, args.unified))
+        parser.output.write(get_diffs(repo, commits, parser.unified))
