@@ -1,12 +1,44 @@
-sudo: false
-dist: trusty
 language: python
-python:
-  - '3.6'
-cache: pip
+
+stages:
+  - linting
+  - test
+  - coverage
+
+cache:
+  pip: true
+  directories:
+    - "$HOME/.cache"
+    - "$HOME/.cache/pre-commit"
+
 install:
-  - pip install tox codecov
-script:
-  - tox
-after_script:
-  - codecov
+  - pip install pip codecov -U
+  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+  - poetry install
+  - source $HOME/.poetry/env
+
+script: 
+-  pytest -q tests/
+
+jobs:
+  include:
+    - python: "2.7"
+    - python: "3.5"
+    - python: "3.6"
+    - python: "3.7"
+      dist: xenial
+
+    - stage: linting
+      python: "3.6"
+      install:
+        - pip install pre-commit
+        - pre-commit install-hooks
+      script:
+        - pre-commit run --all-files
+
+    - stage: coverage
+      python: "3.6"
+      script:
+        - py.test --cov=git_taxbreak tests/
+      after_script:
+        - codecov
