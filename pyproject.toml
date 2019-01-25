@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "git-taxbreak"
+version = "0.1.0"
+description = "Tool for collect artifacts from git for register creative work"
+authors = [
+    "Luczak Kamil <kamilluczak@luczakweb.com>",
+]
+license = "MIT"
+readme = "README.rst"
+repository = "https://github.com/kamil1b/git-taxbreak"
+classifiers = [
+    "Development Status :: 3 Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX",
+    # "Operating System :: Microsoft :: Windows"
+    # "Operating System :: MacOS :: MacOS X"
+    "Topic :: Utilities",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+]
+keywords = ["git", "taxbreak", "tool"]
+
+[tool.poetry.dependencies]
+python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+gitpython = "^2.1"
+pre-commit = "^1.14"
+
+[tool.poetry.dev-dependencies]
+pytest = ">=3.0"
+pytest-cov = ">=2.6.1"
+black = { version = "^18.3-alpha.0", python = ">=3.6" }
+
+[tool.poetry.scripts]
+git-taxbreak = 'git_taxbreak.cmd:main'
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
