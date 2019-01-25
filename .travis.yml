@@ -14,8 +14,8 @@ cache:
 install:
   - pip install pip codecov -U
   - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
-  - poetry install
   - source $HOME/.poetry/env
+  - poetry install -v
 
 script: 
 -  pytest -q tests/
