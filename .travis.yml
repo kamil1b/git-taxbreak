@@ -17,7 +17,7 @@ install:
   - source $HOME/.poetry/env
   - poetry install -v
 
-script: 
+script:
 -  pytest -q tests/
 
 jobs:
