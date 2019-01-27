@@ -4,12 +4,12 @@
 import argparse
 from os.path import expanduser, expandvars
 import sys
-from datetime import datetime
+import datetime
 
 
 def valid_date(s):
     try:
-        datetime.strptime(s, "%m/%d/%y")
+        datetime.datetime.strptime(s, "%m/%d/%y")
         return s
     except ValueError:
         raise argparse.ArgumentTypeError("Invalid date format: {}".format(s))
@@ -17,7 +17,11 @@ def valid_date(s):
 
 def valid_output(filename):
     filename = expanduser(expandvars(filename))
-    return argparse.FileType("w+")(filename)
+    try:
+        argparse.FileType("w+")(filename)
+        return filename
+    except:
+        raise argparse.ArgumentTypeError("Invalid file: {}".format(filename))
 
 
 class ArgumentParser(object):
@@ -27,7 +31,7 @@ class ArgumentParser(object):
         self._parse_arguments()
 
     def _configure_parser(self):
-        today = datetime.today()
+        today = datetime.datetime.today()
         self._parser.add_argument("-u", "--user", action="store")
         self._parser.add_argument(
             "-U", "--unified", type=int, action="store", default=0
