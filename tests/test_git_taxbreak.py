@@ -1,5 +1,6 @@
-from git_taxbreak import __version__
 import pkg_resources
+
+from git_taxbreak import __version__
 
 
 def test_version():

@@ -14,7 +14,7 @@ Git taxbreak
 .. image:: https://codecov.io/gh/kamil1b/git-taxbreak/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/kamil1b/git-taxbreak
 
-Tool for collect artifacts from git for register creative work 
+Tool for collect artifacts from git for register creative work
 
 Install
 -------

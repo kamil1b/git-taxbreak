@@ -2,9 +2,10 @@
 @author Kamil Luczak
 """
 import argparse
-from os.path import expanduser, expandvars
-import sys
 import datetime
+import sys
+from os.path import expanduser
+from os.path import expandvars
 
 
 def valid_date(s):
@@ -17,11 +18,8 @@ def valid_date(s):
 
 def valid_output(filename):
     filename = expanduser(expandvars(filename))
-    try:
-        argparse.FileType("w+")(filename)
-        return filename
-    except:
-        raise argparse.ArgumentTypeError("Invalid file: {}".format(filename))
+    argparse.FileType("w+")(filename)
+    return filename
 
 
 class ArgumentParser(object):
