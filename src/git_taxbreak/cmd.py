@@ -18,13 +18,17 @@ def read_user(repo):
 
 
 def main():
-    parser = ArgumentParser()
+    try:
+        parser = ArgumentParser()
+    except TypeError as error:
+        print(error)
+        exit(1)
     repo = Repo(getcwd(), search_parent_directories=True)
     user = parser.user or read_user(repo)
     artifacts = Collector(
         repo, user, parser.after_date, parser.before_date, parser.unified
     ).Artifacts
-    if parser.type == "file":
+    if parser.type == "zip":
         Writter.archive(parser.output, artifacts)
     else:
         Writter.diff(artifacts, parser.output.write)

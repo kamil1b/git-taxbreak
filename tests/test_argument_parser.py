@@ -26,11 +26,24 @@ def test_user_parser():
     assert user == parser.user
 
 
-@pytest.mark.parametrize("type", ["diff", "file"])
-def test_type_parser(type):
-    sys.argv = ["", "--type=" + type]
+def test_type_diff():
+    sys.argv = ["", "--type=diff"]
     parser = ArgumentParser()
-    assert type == parser.type
+    assert "diff" == parser.type
+
+
+def test_type_zip(tmp_path):
+    filename = tmp_path / "file.zip"
+    filename.touch()
+    sys.argv = ["", "--type=zip", "--output=" + str(filename)]
+    parser = ArgumentParser()
+    assert "zip" == parser.type
+
+
+def test_type_zip_with_incorrect_output_should_throw(tmp_path):
+    sys.argv = ["", "--type=zip"]
+    with pytest.raises(TypeError):
+        ArgumentParser()
 
 
 def test_output_parser(tmp_path):

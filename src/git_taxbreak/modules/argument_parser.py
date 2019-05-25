@@ -27,6 +27,7 @@ class ArgumentParser(object):
         self._parser = argparse.ArgumentParser()
         self._configure_parser()
         self._parse_arguments()
+        self._validate()
 
     def _configure_parser(self):
         today = datetime.datetime.today()
@@ -44,7 +45,7 @@ class ArgumentParser(object):
             "-o", "--output", type=valid_output, default=sys.stdout
         )
         self._parser.add_argument(
-            "-t", "--type", type=str, choices=["diff", "file"], default="file"
+            "-t", "--type", type=str, choices=["diff", "zip"], default="diff"
         )
 
     def _parse_arguments(self):
@@ -55,6 +56,12 @@ class ArgumentParser(object):
         self._type = args.type
         self._unified = args.unified
         self._output = args.output
+
+    def _validate(self):
+        if self._type == "zip" and self._output == sys.stdout:
+            raise TypeError(
+                "Incorrect --output  parameter for 'zip' type, file is needed"
+            )
 
     @property
     def user(self):
