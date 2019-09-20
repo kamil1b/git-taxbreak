@@ -1,8 +1,7 @@
 Git taxbreak
 ------------
 
-.. image:: https://travis-ci.com/kamil1b/git-taxbreak.svg?branch=master
-   :target: https://travis-ci.com/kamil1b/git-taxbreak
+.. image:: https://github.com/kamil1b/git-taxbreak/workflows/Master/badge.svg
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/ambv/black
