@@ -1,21 +1,8 @@
-name: Python package
+name: Build
 
 on: [push]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    - uses: actions/checkout@v1
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.7
-    - name: Lint
-      run: |
-        pip install pre-commit
-        pre-commit install-hooks
-        pre-commit run --all-files
-
   build:
     runs-on: ubuntu-latest
     strategy:
