@@ -4,6 +4,7 @@ import sys
 import pytest
 
 from git_taxbreak.modules.argument_parser import ArgumentParser
+from git_taxbreak.modules.argument_parser import DEFAULT_OUTPUT
 
 
 FAKE_TIME = datetime.datetime(year=2018, month=10, day=11)
@@ -26,24 +27,10 @@ def test_user_parser():
     assert user == parser.user
 
 
-def test_type_diff():
-    sys.argv = ["", "--type=diff"]
+def test_default_output(tmp_path):
+    sys.argv = [""]
     parser = ArgumentParser()
-    assert "diff" == parser.type
-
-
-def test_type_zip(tmp_path):
-    filename = tmp_path / "file.zip"
-    filename.touch()
-    sys.argv = ["", "--type=zip", "--output=" + str(filename)]
-    parser = ArgumentParser()
-    assert "zip" == parser.type
-
-
-def test_type_zip_with_incorrect_output_should_throw(tmp_path):
-    sys.argv = ["", "--type=zip"]
-    with pytest.raises(TypeError):
-        ArgumentParser()
+    assert parser.output == DEFAULT_OUTPUT
 
 
 def test_output_parser(tmp_path):
@@ -78,6 +65,14 @@ def test_date_parser():
     parser = ArgumentParser()
     assert str(parser.before_date) == FAKE_TIME.strftime("%m/%d/%y")
     assert str(parser.after_date)
+
+
+def test_date_parser_thow_on_incorrect_date():
+    sys.argv = ["", "--before=" + "incorrect_date"]
+    with pytest.raises(SystemExit) as pytest_wrapped_e:
+        ArgumentParser()
+    assert pytest_wrapped_e.type == SystemExit
+    assert pytest_wrapped_e.value.code == 2
 
 
 def test_unified_parser():

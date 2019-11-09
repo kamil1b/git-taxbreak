@@ -1,19 +1,19 @@
+import zipfile
 from os import path
-from zipfile import ZipFile
 
 
 class Writter:
     @staticmethod
     def archive(destn, artifacts):
-        with ZipFile(destn, "w") as archive:
-            for commit in artifacts:
-                for file in commit["files"]:
-                    if file["content"]:
-                        archive.writestr(
-                            path.join(commit["commit_hash"], file["file_name"]),
-                            file["content"],
-                        )
+        def append_commit_to_archive(commit, archvie):
+            commit_hash = commit["commit_hash"]
+            archive.writestr(path.join(commit_hash, "diff.txt"), commit["diff"])
+            for file in commit["files"]:
+                if file["content"]:
+                    archive.writestr(
+                        path.join(commit_hash, file["file_name"]), file["content"]
+                    )
 
-    @staticmethod
-    def diff(artifacts, output):
-        output("\n\n".join(commit["diff"] for commit in artifacts))
+        with zipfile.ZipFile(destn, "w") as archive:
+            for commit in artifacts:
+                append_commit_to_archive(commit, archive)

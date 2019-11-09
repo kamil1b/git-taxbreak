@@ -21,17 +21,22 @@ class Collector(object):
             return [
                 {
                     "file_name": file_name,
-                    "content": repository.git.show(commit + ":" + file_name),
+                    "content": repository.git.show(commit + ":" + file_name)
+                    if status != "D"
+                    else None,
                 }
-                for file_name in repository.git.diff_tree(
-                    "--no-commit-id", "--name-only", "-r", commit
-                ).split("\n")
+                for status, file_name in map(
+                    lambda file_entry: file_entry.split("\t"),
+                    repository.git.diff_tree(
+                        "--no-commit-id", "--name-status", "-r", commit
+                    ).split("\n"),
+                )
                 if len(file_name)
             ]
 
         def collect_diff(repository, commit, unified):
             return normalize(
-                "NFKD", repository.git.show("-w", "-p", commit, unified=unified)
+                "NFKD", repository.git.show(commit, "-w", "-p", unified=unified)
             ).encode("ascii", "ignore")
 
         return [

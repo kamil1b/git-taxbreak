@@ -28,7 +28,4 @@ def main():
     artifacts = Collector(
         repo, user, parser.after_date, parser.before_date, parser.unified
     ).Artifacts
-    if parser.type == "zip":
-        Writter.archive(parser.output, artifacts)
-    else:
-        Writter.diff(artifacts, parser.output.write)
+    Writter.archive(parser.output, artifacts)

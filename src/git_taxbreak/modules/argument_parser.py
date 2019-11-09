@@ -3,9 +3,11 @@
 """
 import argparse
 import datetime
-import sys
 from os.path import expanduser
 from os.path import expandvars
+
+
+DEFAULT_OUTPUT = "artifacts.zip"
 
 
 def valid_date(s):
@@ -27,7 +29,6 @@ class ArgumentParser(object):
         self._parser = argparse.ArgumentParser()
         self._configure_parser()
         self._parse_arguments()
-        self._validate()
 
     def _configure_parser(self):
         today = datetime.datetime.today()
@@ -42,10 +43,7 @@ class ArgumentParser(object):
             "-b", "--before", type=valid_date, default=today.strftime("%m/%d/%y")
         )
         self._parser.add_argument(
-            "-o", "--output", type=valid_output, default=sys.stdout
-        )
-        self._parser.add_argument(
-            "-t", "--type", type=str, choices=["diff", "zip"], default="diff"
+            "-o", "--output", type=valid_output, default=DEFAULT_OUTPUT
         )
 
     def _parse_arguments(self):
@@ -53,15 +51,8 @@ class ArgumentParser(object):
         self._user = args.user
         self._after = args.after
         self._before = args.before
-        self._type = args.type
         self._unified = args.unified
         self._output = args.output
-
-    def _validate(self):
-        if self._type == "zip" and self._output == sys.stdout:
-            raise TypeError(
-                "Incorrect --output  parameter for 'zip' type, file is needed"
-            )
 
     @property
     def user(self):
