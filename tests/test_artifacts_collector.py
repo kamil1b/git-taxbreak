@@ -1,7 +1,5 @@
 from git_taxbreak.modules.artifacts_collector import Collector
 
-import pytest
-
 AUTHOR = "test_author"
 DATE_AFTER = ""
 DATE_BEFORE = ""
