@@ -71,9 +71,5 @@ class ArgumentParser(object):
         return self._output
 
     @property
-    def type(self):
-        return self._type
-
-    @property
     def unified(self):
         return self._unified

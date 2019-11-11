@@ -4,7 +4,6 @@ import sys
 import pytest
 
 from git_taxbreak.modules.argument_parser import ArgumentParser
-from git_taxbreak.modules.argument_parser import DEFAULT_OUTPUT
 
 
 FAKE_TIME = datetime.datetime(year=2018, month=10, day=11)
@@ -20,17 +19,24 @@ def patch_datetime_today(monkeypatch):
     monkeypatch.setattr(datetime, "datetime", DateTimeMock)
 
 
-def test_user_parser():
+@pytest.fixture
+def default_output(monkeypatch, tmp_path):
+    patched = tmp_path / "default.zip"
+    monkeypatch.setattr("git_taxbreak.modules.argument_parser.DEFAULT_OUTPUT", patched)
+    return patched
+
+
+def test_user_parser(default_output):
     user = "Tom"
     sys.argv = ["", "--user=" + user]
     parser = ArgumentParser()
     assert user == parser.user
 
 
-def test_default_output(tmp_path):
+def test_default_output(default_output):
     sys.argv = [""]
     parser = ArgumentParser()
-    assert parser.output == DEFAULT_OUTPUT
+    assert str(parser.output) == str(default_output)
 
 
 def test_output_parser(tmp_path):
@@ -49,14 +55,14 @@ def test_output_incorrect_argument(tmp_path):
         ArgumentParser()
 
 
-def test_valid_date_default_value(patch_datetime_today):
+def test_valid_date_default_value(patch_datetime_today, default_output):
     sys.argv = [""]
     parser = ArgumentParser()
     assert str(parser.before_date) == FAKE_TIME.strftime("%m/%d/%y")
     assert str(parser.after_date) == FAKE_TIME.strftime("%m/1/%y")
 
 
-def test_date_parser():
+def test_date_parser(default_output):
     sys.argv = [
         "",
         "--before=" + FAKE_TIME.strftime("%m/%d/%y"),
@@ -67,7 +73,7 @@ def test_date_parser():
     assert str(parser.after_date)
 
 
-def test_date_parser_thow_on_incorrect_date():
+def test_date_parser_thow_on_incorrect_date(default_output):
     sys.argv = ["", "--before=" + "incorrect_date"]
     with pytest.raises(SystemExit) as pytest_wrapped_e:
         ArgumentParser()
@@ -75,7 +81,7 @@ def test_date_parser_thow_on_incorrect_date():
     assert pytest_wrapped_e.value.code == 2
 
 
-def test_unified_parser():
+def test_unified_parser(default_output):
     sys.argv = ["", "--unified=1"]
     parser = ArgumentParser()
     assert parser.unified == 1
