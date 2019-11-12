@@ -5,9 +5,13 @@ description = "Tool for collect artifacts from git for register creative work"
 authors = [
     "Luczak Kamil <kamilluczak@luczakweb.com>",
 ]
+
 license = "MIT"
 readme = "README.rst"
+
 repository = "https://github.com/kamil1b/git-taxbreak"
+homepage = "https://github.com/kamil1b/git-taxbreak"
+
 classifiers = [
     "Development Status :: 3 Alpha",
     "Intended Audience :: Developers",
