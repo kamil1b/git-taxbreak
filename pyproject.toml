@@ -13,12 +13,14 @@ repository = "https://github.com/kamil1b/git-taxbreak"
 homepage = "https://github.com/kamil1b/git-taxbreak"
 
 classifiers = [
-    "Development Status :: 3 Alpha",
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: POSIX",
     # "Operating System :: Microsoft :: Windows"
     # "Operating System :: MacOS :: MacOS X"
+    "Topic :: Software Development",
     "Topic :: Utilities",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.5",
