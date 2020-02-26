@@ -2,9 +2,7 @@ import datetime
 import sys
 
 import pytest
-
 from git_taxbreak.modules.argument_parser import ArgumentParser
-
 
 FAKE_TIME = datetime.datetime(year=2018, month=10, day=11)
 

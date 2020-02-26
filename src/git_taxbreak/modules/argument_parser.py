@@ -3,9 +3,7 @@
 """
 import argparse
 import datetime
-from os.path import expanduser
-from os.path import expandvars
-
+from os.path import expanduser, expandvars
 
 DEFAULT_OUTPUT = "artifacts.zip"
 

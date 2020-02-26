@@ -1,7 +1,6 @@
 import zipfile
 
 import pytest
-
 from git_taxbreak.modules.writter import Writter
 
 
