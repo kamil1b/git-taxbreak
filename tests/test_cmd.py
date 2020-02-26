@@ -1,8 +1,6 @@
 import git
 import pytest
-
 from git_taxbreak import cmd
-
 
 EMPTY_CONFIG = {}
 TEST_USER = "TEST_USER"

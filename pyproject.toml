@@ -94,3 +94,6 @@ template = "changelog/_templates.rst"
   directory = "trivial"
   name = "Trivial/Internal Changes"
   showcontent = true
+
+[config]
+known_third_party = ["git", "git_taxbreak", "pkg_resources", "pytest"]
