@@ -23,7 +23,7 @@ jobs:
         run: |
           source $HOME/.poetry/env
           cd doc/en/
-          make html
+          poetry run make html
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
