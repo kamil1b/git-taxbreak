@@ -30,3 +30,4 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
           FOLDER: doc/en/_build/html
+          DEBUG: true
