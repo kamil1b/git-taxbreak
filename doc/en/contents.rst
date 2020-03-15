@@ -8,7 +8,10 @@ Welcome to git-taxbreak's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   getting-started
+   intro
+   examples
+   source/git_taxbreak
+
 
 .. only:: html
 

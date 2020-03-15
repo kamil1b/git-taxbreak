@@ -11,6 +11,13 @@ from .modules.writter import Writter
 
 
 def read_user(repo):
+    """ Returns  user name read from repository config
+
+    :param repo: repository
+    :type repo: git.Repo, mandatory
+    :return:
+    :rtype: str, None if user name not found
+    """
     with repo.config_reader() as reader:
         if "user" in reader.sections():
             return next((v for k, v in reader.items("user") if k == "name"), None)
@@ -18,6 +25,7 @@ def read_user(repo):
 
 
 def main():
+    """ Program main loop """
     try:
         parser = ArgumentParser()
     except TypeError as error:

@@ -39,13 +39,10 @@ pre-commit = "^1.20"
 pytest = ">=5.0"
 pytest-cov = ">=2.6.1"
 black = { version = "^19.10-beta.0", python = ">=3.6" }
+sphinx = {version = "^2.4.4"}
 
 [tool.poetry.scripts]
 git-taxbreak = 'git_taxbreak.cmd:main'
-
-[build-system]
-requires = ["poetry>=1.0.0b3"]
-build-backend = "poetry.masonry.api"
 
 [tool.towncrier]
 package = "git_taxbreak"
@@ -94,6 +91,10 @@ template = "changelog/_templates.rst"
   directory = "trivial"
   name = "Trivial/Internal Changes"
   showcontent = true
+
+[build-system]
+requires = ["poetry>=1.0.0b3"]
+build-backend = "poetry.masonry.api"
 
 [config]
 known_third_party = ["git", "git_taxbreak", "pkg_resources", "pytest"]
