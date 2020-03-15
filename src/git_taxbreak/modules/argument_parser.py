@@ -22,9 +22,10 @@ def valid_output(filename):
     return filename
 
 
-class ArgumentParser():
+class ArgumentParser:
     """Class response for parse arguments provide to aplication
     """
+
     def __init__(self):
         self._parser = argparse.ArgumentParser()
         self._configure_parser()

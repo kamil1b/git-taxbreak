@@ -21,7 +21,7 @@ Usage
 -----
 
 .. code-block:: bash
-   
+
     cd git-repository
     git-taxbreak
 
