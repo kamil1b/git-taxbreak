@@ -21,6 +21,7 @@ jobs:
           poetry install -v
       - name: Build doc
         run: |
+          source $HOME/.poetry/env
           cd doc/en/
           make html
       - name: Deploy 🚀
