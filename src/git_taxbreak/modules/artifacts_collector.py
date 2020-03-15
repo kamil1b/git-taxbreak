@@ -1,7 +1,9 @@
 from unicodedata import normalize
 
 
-class Collector(object):
+class Collector:
+    """Class response for collect artifacts from repository"""
+
     def __init__(self, repository, user, after, before, unified):
         commits = self.__collect_commits(repository, user, after, before)
         self._artifacts = self.__collect_artifacts(repository, commits, unified)
