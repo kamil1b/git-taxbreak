@@ -51,5 +51,5 @@ class Collector:
         ]
 
     @property
-    def Artifacts(self):
+    def artifacts(self):
         return self._artifacts

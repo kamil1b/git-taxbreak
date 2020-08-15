@@ -1,6 +1,7 @@
 """ Tool for collect artifacts for taxbreak program
 @author Kamil Luczak
 """
+import sys
 from os import getcwd
 
 from git import Repo
@@ -30,10 +31,11 @@ def main():
         parser = ArgumentParser()
     except TypeError as error:
         print(error)
-        exit(1)
+        sys.exit(1)
     repo = Repo(getcwd(), search_parent_directories=True)
     user = parser.user or read_user(repo)
     artifacts = Collector(
         repo, user, parser.after_date, parser.before_date, parser.unified
-    ).Artifacts
-    Writter.archive(parser.output, artifacts)
+    ).artifacts
+    with Writter(parser.output) as writter:
+        writter.archive(artifacts)
