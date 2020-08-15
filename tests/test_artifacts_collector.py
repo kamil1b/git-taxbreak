@@ -51,7 +51,7 @@ def test_collector():
     )
     repo = RepositoryMock(git)
 
-    artifacts = Collector(repo, AUTHOR, DATE_AFTER, DATE_BEFORE, UNIFIED).Artifacts
+    artifacts = Collector(repo, AUTHOR, DATE_AFTER, DATE_BEFORE, UNIFIED).artifacts
     assert artifacts == [
         {
             "commit_hash": "8b8d0dcdf0a81375e8c9b31aaebe4d6c536fdf25",

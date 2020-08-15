@@ -14,7 +14,7 @@ def patch_zip_file(monkeypatch):
         def __enter__(self):
             return self
 
-        def __exit__(self, type, value, traceback):
+        def close(self):
             self.output.content = self.content
 
         def writestr(self, *args, **kwargs):
@@ -26,7 +26,7 @@ def patch_zip_file(monkeypatch):
 
 
 class DummyOutput(object):
-    pass
+    content = None
 
 
 def test_archive_save(patch_zip_file):
@@ -61,7 +61,7 @@ def test_archive_save(patch_zip_file):
     ]
 
     dummy_output = DummyOutput()
-    Writter.archive(dummy_output, ARTIFACTS)
+    Writter(dummy_output).archive(ARTIFACTS)
     assert dummy_output.content == EXPECTED_CONTENT
 
 
@@ -77,5 +77,5 @@ def test_archive_not_throw_when_file_content_not_exist(patch_zip_file):
     EXPECTED_CONTENT = [{"file_name": "hash1/diff.txt", "content": "diff_content1"}]
     dummy_output = DummyOutput()
 
-    Writter.archive(dummy_output, ARTIFACTS)
+    Writter(dummy_output).archive(ARTIFACTS)
     assert dummy_output.content == EXPECTED_CONTENT
