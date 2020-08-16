@@ -70,7 +70,7 @@ jobs:
     - name: Coverage
       run: |
         source $HOME/.poetry/env
-        poetry run pytest --cov=git_taxbreak tests/
+        poetry run pytest --cov=git_taxbreak --cov-report=xml tests/
     - name: Push coverage
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
