@@ -25,7 +25,7 @@ def patch_zip_file(monkeypatch):
     monkeypatch.setattr(zipfile, "ZipFile", ZipFileMock)
 
 
-class DummyOutput(object):
+class DummyOutput:
     content = None
 
 
@@ -59,9 +59,10 @@ def test_archive_save(patch_zip_file):
         {"file_name": "hash2/some_path/file_name4.txt", "content": "file_content4"},
         {"file_name": "hash2/file_name5.txt", "content": "file_content5"},
     ]
-
     dummy_output = DummyOutput()
-    Writter(dummy_output).archive(ARTIFACTS)
+
+    with Writter(dummy_output) as writter:
+        writter.archive(ARTIFACTS)
     assert dummy_output.content == EXPECTED_CONTENT
 
 
@@ -77,5 +78,6 @@ def test_archive_not_throw_when_file_content_not_exist(patch_zip_file):
     EXPECTED_CONTENT = [{"file_name": "hash1/diff.txt", "content": "diff_content1"}]
     dummy_output = DummyOutput()
 
-    Writter(dummy_output).archive(ARTIFACTS)
+    with Writter(dummy_output) as writter:
+        writter.archive(ARTIFACTS)
     assert dummy_output.content == EXPECTED_CONTENT
