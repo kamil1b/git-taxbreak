@@ -37,9 +37,9 @@
 <div class="viewcode-block" id="Collector"><a class="viewcode-back" href="../../../source/git_taxbreak.modules.html#git_taxbreak.modules.artifacts_collector.Collector">[docs]</a><span class="k">class</span> <span class="nc">Collector</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Class response for collect artifacts from repository&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">after</span><span class="p">,</span> <span class="n">before</span><span class="p">,</span> <span class="n">unified</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">after</span><span class="p">,</span> <span class="n">before</span><span class="p">):</span>
         <span class="n">commits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__collect_commits</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">after</span><span class="p">,</span> <span class="n">before</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_artifacts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__collect_artifacts</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">commits</span><span class="p">,</span> <span class="n">unified</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_artifacts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__collect_artifacts</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">commits</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">__collect_commits</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">after</span><span class="p">,</span> <span class="n">before</span><span class="p">):</span>
@@ -51,7 +51,7 @@
         <span class="k">return</span> <span class="n">commits</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">__collect_artifacts</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">commits</span><span class="p">,</span> <span class="n">unified</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__collect_artifacts</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">commits</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">commit</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">[</span>
                 <span class="p">{</span>
@@ -69,16 +69,16 @@
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
             <span class="p">]</span>
 
-        <span class="k">def</span> <span class="nf">collect_diff</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">unified</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">collect_diff</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">commit</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">normalize</span><span class="p">(</span>
-                <span class="s2">&quot;NFKD&quot;</span><span class="p">,</span> <span class="n">repository</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="n">unified</span><span class="o">=</span><span class="n">unified</span><span class="p">)</span>
+                <span class="s2">&quot;NFKD&quot;</span><span class="p">,</span> <span class="n">repository</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">commit</span><span class="p">,</span> <span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="n">unified</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">,</span> <span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="p">[</span>
             <span class="p">{</span>
                 <span class="s2">&quot;commit_hash&quot;</span><span class="p">:</span> <span class="n">commit</span><span class="p">,</span>
                 <span class="s2">&quot;files&quot;</span><span class="p">:</span> <span class="n">collect_files</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">commit</span><span class="p">),</span>
-                <span class="s2">&quot;diff&quot;</span><span class="p">:</span> <span class="n">collect_diff</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">unified</span><span class="p">),</span>
+                <span class="s2">&quot;diff&quot;</span><span class="p">:</span> <span class="n">collect_diff</span><span class="p">(</span><span class="n">repository</span><span class="p">,</span> <span class="n">commit</span><span class="p">),</span>
             <span class="p">}</span>
             <span class="k">for</span> <span class="n">commit</span> <span class="ow">in</span> <span class="n">commits</span>
         <span class="p">]</span>

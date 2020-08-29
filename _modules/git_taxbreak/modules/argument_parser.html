@@ -67,9 +67,7 @@
     <span class="k">def</span> <span class="nf">_configure_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-u&quot;</span><span class="p">,</span> <span class="s2">&quot;--user&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-            <span class="s2">&quot;-U&quot;</span><span class="p">,</span> <span class="s2">&quot;--unified&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span>
-        <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
             <span class="s2">&quot;-a&quot;</span><span class="p">,</span> <span class="s2">&quot;--after&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">valid_date</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">today</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%m/1/%y&quot;</span><span class="p">)</span>
         <span class="p">)</span>
@@ -85,7 +83,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_user</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">user</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_after</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">after</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_before</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">before</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_unified</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">unified</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">output</span>
 
     <span class="nd">@property</span>
@@ -102,11 +99,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">unified</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unified</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output</span></div>
 </pre></div>
 
           </div>
