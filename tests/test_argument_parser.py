@@ -77,9 +77,3 @@ def test_date_parser_thow_on_incorrect_date(default_output):
         ArgumentParser()
     assert pytest_wrapped_e.type == SystemExit
     assert pytest_wrapped_e.value.code == 2
-
-
-def test_unified_parser(default_output):
-    sys.argv = ["", "--unified=1"]
-    parser = ArgumentParser()
-    assert parser.unified == 1

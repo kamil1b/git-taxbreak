@@ -4,9 +4,9 @@ from unicodedata import normalize
 class Collector:
     """Class response for collect artifacts from repository"""
 
-    def __init__(self, repository, user, after, before, unified):
+    def __init__(self, repository, user, after, before):
         commits = self.__collect_commits(repository, user, after, before)
-        self._artifacts = self.__collect_artifacts(repository, commits, unified)
+        self._artifacts = self.__collect_artifacts(repository, commits)
 
     @staticmethod
     def __collect_commits(repository, user, after, before):
@@ -18,7 +18,7 @@ class Collector:
         return commits
 
     @staticmethod
-    def __collect_artifacts(repository, commits, unified):
+    def __collect_artifacts(repository, commits):
         def collect_files(repository, commit):
             return [
                 {
@@ -36,16 +36,16 @@ class Collector:
                 if len(file_name)
             ]
 
-        def collect_diff(repository, commit, unified):
+        def collect_diff(repository, commit):
             return normalize(
-                "NFKD", repository.git.show(commit, "-w", "-p", unified=unified)
+                "NFKD", repository.git.show(commit, "-w", "-p", unified=0)
             ).encode("ascii", "ignore")
 
         return [
             {
                 "commit_hash": commit,
                 "files": collect_files(repository, commit),
-                "diff": collect_diff(repository, commit, unified),
+                "diff": collect_diff(repository, commit),
             }
             for commit in commits
         ]

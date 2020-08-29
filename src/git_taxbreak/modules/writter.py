@@ -17,15 +17,16 @@ class Writter:
     def __exit__(self, type, value, traceback):
         self.__archive.close()
 
-    def archive(self, artifacts):
-        def append_commit_to_archive(commit, archive):
-            commit_hash = commit["commit_hash"]
-            archive.writestr(path.join(commit_hash, "diff.txt"), commit["diff"])
-            for file in commit["files"]:
-                if file["content"]:
-                    archive.writestr(
-                        path.join(commit_hash, file["file_name"]), file["content"]
-                    )
+    @staticmethod
+    def __append_commit_to_archive(commit, archive):
+        commit_hash = commit["commit_hash"]
+        archive.writestr(path.join(commit_hash, "diff.txt"), commit["diff"])
+        for file in commit["files"]:
+            if file["content"]:
+                archive.writestr(
+                    path.join(commit_hash, file["file_name"]), file["content"]
+                )
 
+    def archive(self, artifacts):
         for commit in artifacts:
-            append_commit_to_archive(commit, self.__archive)
+            self.__append_commit_to_archive(commit, self.__archive)

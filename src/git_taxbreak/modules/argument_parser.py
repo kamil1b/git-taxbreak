@@ -34,9 +34,7 @@ class ArgumentParser:
     def _configure_parser(self):
         today = datetime.datetime.today()
         self._parser.add_argument("-u", "--user", action="store")
-        self._parser.add_argument(
-            "-U", "--unified", type=int, action="store", default=0
-        )
+
         self._parser.add_argument(
             "-a", "--after", type=valid_date, default=today.strftime("%m/1/%y")
         )
@@ -52,7 +50,6 @@ class ArgumentParser:
         self._user = args.user
         self._after = args.after
         self._before = args.before
-        self._unified = args.unified
         self._output = args.output
 
     @property
@@ -70,7 +67,3 @@ class ArgumentParser:
     @property
     def output(self):
         return self._output
-
-    @property
-    def unified(self):
-        return self._unified

@@ -3,7 +3,6 @@ from git_taxbreak.modules.artifacts_collector import Collector
 AUTHOR = "test_author"
 DATE_AFTER = ""
 DATE_BEFORE = ""
-UNIFIED = 0
 
 
 class GitMock(object):
@@ -51,7 +50,7 @@ def test_collector():
     )
     repo = RepositoryMock(git)
 
-    artifacts = Collector(repo, AUTHOR, DATE_AFTER, DATE_BEFORE, UNIFIED).artifacts
+    artifacts = Collector(repo, AUTHOR, DATE_AFTER, DATE_BEFORE).artifacts
     assert artifacts == [
         {
             "commit_hash": "8b8d0dcdf0a81375e8c9b31aaebe4d6c536fdf25",
