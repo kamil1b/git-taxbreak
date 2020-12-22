@@ -23,15 +23,15 @@ classifiers = [
     "Topic :: Software Development",
     "Topic :: Utilities",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
 ]
 keywords = ["git", "taxbreak", "tool"]
 
 [tool.poetry.dependencies]
-python = ">=3.5"
+python = ">=3.6"
 gitpython = "^3"
 pre-commit = "^1.20"
 
