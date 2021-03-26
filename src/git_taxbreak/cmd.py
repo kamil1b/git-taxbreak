@@ -8,7 +8,7 @@ from git import Repo
 
 from .modules.argument_parser import ArgumentParser
 from .modules.artifacts_collector import Collector
-from .modules.writter import Writter
+from .modules.writer import Writer
 
 
 def read_user(repo):
@@ -37,5 +37,5 @@ def main():
     artifacts = Collector(
         repo, user, parser.after_date, parser.before_date, parser.unified
     ).artifacts
-    with Writter(parser.output) as writter:
-        writter.archive(artifacts)
+    with Writer(parser.output) as writer:
+        writer.archive(artifacts)

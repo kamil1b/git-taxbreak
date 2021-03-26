@@ -1,7 +1,7 @@
 import zipfile
 
 import pytest
-from git_taxbreak.modules.writter import Writter
+from git_taxbreak.modules.writer import Writer
 
 
 @pytest.fixture
@@ -33,6 +33,7 @@ def test_archive_save(patch_zip_file):
     ARTIFACTS = [
         {
             "diff": "diff_content1",
+            "message": "summary1\n\nMore text1",
             "commit_hash": "hash1",
             "files": [
                 {"file_name": "some_path/file_name1.txt", "content": "file_content1"},
@@ -42,6 +43,7 @@ def test_archive_save(patch_zip_file):
         },
         {
             "diff": "diff_content2",
+            "message": "summary2\n\nMore text2",
             "commit_hash": "hash2",
             "files": [
                 {"file_name": "some_path/file_name4.txt", "content": "file_content4"},
@@ -58,11 +60,12 @@ def test_archive_save(patch_zip_file):
         {"file_name": "hash2/diff.txt", "content": "diff_content2"},
         {"file_name": "hash2/some_path/file_name4.txt", "content": "file_content4"},
         {"file_name": "hash2/file_name5.txt", "content": "file_content5"},
+        {"file_name": "work-commits.txt", "content": "hash1 summary1\nhash2 summary2"},
     ]
     dummy_output = DummyOutput()
 
-    with Writter(dummy_output) as writter:
-        writter.archive(ARTIFACTS)
+    with Writer(dummy_output) as writer:
+        writer.archive(ARTIFACTS)
     assert dummy_output.content == EXPECTED_CONTENT
 
 
@@ -70,14 +73,18 @@ def test_archive_not_throw_when_file_content_not_exist(patch_zip_file):
     ARTIFACTS = [
         {
             "diff": "diff_content1",
+            "message": "summary1\n\nMore text1",
             "commit_hash": "hash1",
             "files": [{"file_name": "some_path/file_name1.txt", "content": None}],
         }
     ]
 
-    EXPECTED_CONTENT = [{"file_name": "hash1/diff.txt", "content": "diff_content1"}]
+    EXPECTED_CONTENT = [
+        {"file_name": "hash1/diff.txt", "content": "diff_content1"},
+        {"file_name": "work-commits.txt", "content": "hash1 summary1"},
+    ]
     dummy_output = DummyOutput()
 
-    with Writter(dummy_output) as writter:
-        writter.archive(ARTIFACTS)
+    with Writer(dummy_output) as writer:
+        writer.archive(ARTIFACTS)
     assert dummy_output.content == EXPECTED_CONTENT

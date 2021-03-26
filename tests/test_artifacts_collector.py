@@ -21,15 +21,27 @@ class GitMock(object):
         return self.output[0]
 
     def show(self, *args, **kwargs):
+        assert args[0] in self.output[2]
         return self.output[2][args[0]]
 
     def diff_tree(self, *args, **kwargs):
+        assert args[3] in self.output[1]
         return self.output[1][args[3]]
 
 
+class Commit(object):
+    def __init__(self, message):
+        self.message = message
+
+
 class RepositoryMock(object):
-    def __init__(self, git):
+    def __init__(self, git, commits):
         self.git = git
+        self.commits = commits
+
+    def commit(self, commit_hash):
+        assert commit_hash in self.commits
+        return self.commits[commit_hash]
 
 
 def test_collector():
@@ -48,12 +60,17 @@ def test_collector():
     git = GitMock(
         [LOG_OUTPUT, DIFF_TREE_OUTPUT, SHOW_OUTPUT], AUTHOR, DATE_BEFORE, DATE_AFTER
     )
-    repo = RepositoryMock(git)
+    COMMITS = {
+        "8b8d0dcdf0a81375e8c9b31aaebe4d6c536fdf25": Commit("message1"),
+        "659a484f0d84f807ceb34bd4f93ac394d23990cb": Commit("message2"),
+    }
+    repo = RepositoryMock(git, COMMITS)
 
     artifacts = Collector(repo, AUTHOR, DATE_AFTER, DATE_BEFORE).artifacts
     assert artifacts == [
         {
             "commit_hash": "8b8d0dcdf0a81375e8c9b31aaebe4d6c536fdf25",
+            "message": "message1",
             "files": [
                 {"file_name": "file1", "content": "output1"},
                 {"file_name": "path2/file2", "content": "output2"},
@@ -63,6 +80,7 @@ def test_collector():
         },
         {
             "commit_hash": "659a484f0d84f807ceb34bd4f93ac394d23990cb",
+            "message": "message2",
             "files": [
                 {"file_name": "file1", "content": "output3"},
                 {"file_name": "path5/file5", "content": None},

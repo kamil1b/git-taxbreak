@@ -44,6 +44,7 @@ class Collector:
         return [
             {
                 "commit_hash": commit,
+                "message": repository.commit(commit).message,
                 "files": collect_files(repository, commit),
                 "diff": collect_diff(repository, commit),
             }
