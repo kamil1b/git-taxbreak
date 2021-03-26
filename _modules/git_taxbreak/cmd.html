@@ -41,7 +41,7 @@
 
 <span class="kn">from</span> <span class="nn">.modules.argument_parser</span> <span class="kn">import</span> <span class="n">ArgumentParser</span>
 <span class="kn">from</span> <span class="nn">.modules.artifacts_collector</span> <span class="kn">import</span> <span class="n">Collector</span>
-<span class="kn">from</span> <span class="nn">.modules.writter</span> <span class="kn">import</span> <span class="n">Writter</span>
+<span class="kn">from</span> <span class="nn">.modules.writer</span> <span class="kn">import</span> <span class="n">Writer</span>
 
 
 <div class="viewcode-block" id="read_user"><a class="viewcode-back" href="../../source/git_taxbreak.html#git_taxbreak.cmd.read_user">[docs]</a><span class="k">def</span> <span class="nf">read_user</span><span class="p">(</span><span class="n">repo</span><span class="p">):</span>
@@ -70,8 +70,8 @@
     <span class="n">artifacts</span> <span class="o">=</span> <span class="n">Collector</span><span class="p">(</span>
         <span class="n">repo</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">after_date</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">before_date</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">unified</span>
     <span class="p">)</span><span class="o">.</span><span class="n">artifacts</span>
-    <span class="k">with</span> <span class="n">Writter</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">output</span><span class="p">)</span> <span class="k">as</span> <span class="n">writter</span><span class="p">:</span>
-        <span class="n">writter</span><span class="o">.</span><span class="n">archive</span><span class="p">(</span><span class="n">artifacts</span><span class="p">)</span></div>
+    <span class="k">with</span> <span class="n">Writer</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">output</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">archive</span><span class="p">(</span><span class="n">artifacts</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
